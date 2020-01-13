@@ -1,7 +1,7 @@
 name: flutter_instagram_image_picker
 description: A Flutter package for picking images from Instagram
 version: 0.0.1
-homepage: _
+homepage: https://github.com/kfiross/flutter_instagram_image_picker
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
