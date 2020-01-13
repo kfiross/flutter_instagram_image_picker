@@ -7,8 +7,6 @@ import 'screens.dart';
 class InstagramAuth with ChangeNotifier {
   static String _accessToken = "";
 
-  set accessToken(String token) => _accessToken = token;
-
   String get accessToken => _accessToken;
 
   static final InstagramAuth _singleton = new InstagramAuth._();
@@ -22,7 +20,7 @@ class InstagramAuth with ChangeNotifier {
 
     flutterWebviewPlugin.onUrlChanged.listen((String url) async {
       if (url.contains('access_token=')) {
-        accessToken = url.split("access_token=")[1];
+        _accessToken = url.split("access_token=")[1];
         print(accessToken);
         await flutterWebviewPlugin.cleanCookies();
         await flutterWebviewPlugin.close();
