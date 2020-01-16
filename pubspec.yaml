@@ -1,6 +1,6 @@
 name: flutter_instagram_image_picker
 description: Flutter plugin that allows you to display Instagram multi image picker on iOS and Android.
-version: 0.1.1
+version: 0.3.0
 homepage: https://github.com/kfiross/flutter_instagram_image_picker
 
 environment:
@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  shared_preferences: ^0.5.5
   flutter_webview_plugin: ^0.3.10+1
   http: ^0.12.0
 

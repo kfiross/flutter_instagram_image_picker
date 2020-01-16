@@ -20,6 +20,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^0.1.2
+
   flutter_instagram_image_picker:
     path: ../
 
@@ -32,6 +36,10 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
 
   # To add assets to your package, add an assets section, like this:
   # assets:

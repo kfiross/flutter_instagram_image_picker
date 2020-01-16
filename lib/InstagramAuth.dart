@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens.dart';
 
 class InstagramAuth with ChangeNotifier {
-  static String _accessToken = "";
-
-  String get accessToken => _accessToken;
+  Future<String> get accessToken async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("instagram_token");
+  }
 
   static final InstagramAuth _singleton = new InstagramAuth._();
 
@@ -20,16 +22,25 @@ class InstagramAuth with ChangeNotifier {
 
     flutterWebviewPlugin.onUrlChanged.listen((String url) async {
       if (url.contains('access_token=')) {
-        _accessToken = url.split("access_token=")[1];
+        // save access token for later logins
+        var _accessToken = url.split("access_token=")[1];
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("instagram_token", _accessToken);
+
         print(accessToken);
         await flutterWebviewPlugin.cleanCookies();
         await flutterWebviewPlugin.close();
 
         // pop the webview Scaffold and immediately enter the picker
-        Navigator.pop(context);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeScreen2()));
+        Navigator.pop(context, _accessToken);
       }
     });
+  }
+
+  Future<void> logout() async{
+    // remove access token from prefs
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("instagram_token");
   }
 }

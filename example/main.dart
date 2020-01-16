@@ -4,10 +4,10 @@ import 'package:flutter_instagram_image_picker/flutter_instagram_image_picker.da
 import 'package:flutter_instagram_image_picker/screens.dart';
 
 void main() => runApp(
-      new MaterialApp(
+      MaterialApp(
         title: 'Instagram picker Demo',
-        theme: new ThemeData(primarySwatch: Colors.blue),
-        home: new LoginPage(),
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: LoginPage(),
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -22,31 +22,39 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: RaisedButton(
             child: Text("Continue with instagram"),
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => InstagramWebViewLoginPage()));
+            onPressed: () async {
+              var accessToken;
 
+              accessToken = await InstagramAuth().accessToken;
+              // check if user already logged in, if not log the user using the
+              // WebView interface
+              if (accessToken == null) {
+                accessToken = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => InstagramWebViewLoginPage(),
+                    ));
+
+                // if user canceled the operation
+                if (accessToken == null) return;
+              }
+
+              // after got access token, can go to picker screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InstagramImagePicker(
+                    accessToken,
+                    onDone: (items) {
+                      print(items.length);
+                      Navigator.pop(context);
+                    },
+                    onCancel: () => Navigator.pop(context),
+                  ),
+                ),
+              );
             }),
       ),
     );
   }
-}
-class ResultsScreen2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var accessToken = InstagramAuth().accessToken;
-
-    return Container(
-      child: InstagramImagePicker(
-      accessToken,
-      onDone: (items) {
-        // items contains the urls of the selected photos
-        print(items.length);
-        Navigator.pop(context);
-      },
-      onCancel: () => Navigator.pop(context),
-      ),
-    );
-  }
-
 }

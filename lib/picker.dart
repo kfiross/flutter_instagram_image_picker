@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import './InstagramAuth.dart';
 
 import 'graph_api.dart';
 import 'model/photo.dart';
@@ -47,6 +48,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   List<Photo> _photos = [];
   String _photosNextLink;
   List<Photo> _selectedPhotos;
+  static bool first = true;
 
   AnimationController _controller;
   Animation<Offset> _imageListPosition;
@@ -83,10 +85,10 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   }
 
   Future<void> _paginatePhotos() async {
-//    if (_photosNextLink == null) {
-//      return;
-//    }
-    PhotoPaging photos = await _client.fetchPhotos();
+    if (!first && _photosNextLink == null) {
+      return;
+    }
+    PhotoPaging photos = await _client.fetchPhotos(pagingUrl: _photosNextLink);
     setState(() {
       _photos.addAll(photos.data);
       if (photos.pagination != null) {
@@ -108,7 +110,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   }
 
   void _onLogout() async {
-    //await Provider.of<AuthService>(context).fbLogin.logOut();
+    await InstagramAuth().logout();
     _onCancel();
   }
 
@@ -136,26 +138,6 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
     _reset();
     widget.onCancel();
   }
-
-//  Widget _buildCancelButton() {
-//    return GestureDetector(
-//      onTap: _onCancel,
-//      child: Center(
-//        child: Padding(
-//          padding: EdgeInsets.only(left: 5.00),
-//          child: Text(
-//            '${widget.cancelBtnText}',
-//            textScaleFactor: 1.3,
-//            style: widget.cancelBtnTextStyle ??
-//                TextStyle(
-//                  fontSize: 12.0,
-//                  color: Colors.white,
-//                ),
-//          ),
-//        ),
-//      ),
-//    );
-//  }
 
   void _onPhotoTap(Photo photo) {
     int itemIndex = _selectedPhotos.indexOf(photo);
@@ -204,7 +186,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
                 _photos,
                 _selectedPhotos,
                 onPhotoTap: _onPhotoTap,
-                //onLoadMore: _paginatePhotos,
+                onLoadMore: _paginatePhotos,
               ),
             ),
           ],

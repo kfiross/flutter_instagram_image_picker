@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import 'InstagramAuth.dart';
-import 'picker.dart';
 
 class InstagramWebViewLoginPage extends StatelessWidget {
   @override
@@ -14,32 +13,13 @@ class InstagramWebViewLoginPage extends StatelessWidget {
 
     return WebviewScaffold(
       url: url,
-      appBar: new AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.grey[800],
         title: const Text('Login to Instagram', style: TextStyle(color: Colors.white),),
       ),
       withZoom: true,
       withLocalStorage: true,
       hidden: true,
-    );
-  }
-
-}
-
-class HomeScreen2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var accessToken = InstagramAuth().accessToken;
-
-    return Container(
-      child: InstagramImagePicker(
-        accessToken,
-        onDone: (items) {
-          print(items.length);
-          Navigator.pop(context);
-        },
-        onCancel: () => Navigator.pop(context),
-      ),
     );
   }
 }
