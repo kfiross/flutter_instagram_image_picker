@@ -45,8 +45,8 @@ class LoginPage extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => InstagramImagePicker(
                     accessToken,
+                    showLogoutButton: true,
                     onDone: (items) {
-                      print(items.length);
                       Navigator.pop(context);
                     },
                     onCancel: () => Navigator.pop(context),

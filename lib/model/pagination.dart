@@ -1,8 +1,4 @@
-
-import 'cursors.dart';
-
 class Pagination {
-  //final Cursors cursor;
   final String next;
 
   Pagination(
@@ -11,6 +7,5 @@ class Pagination {
   );
 
   Pagination.fromJson(Map json)
-      : //cursor = Cursors.fromJson(json['cursors']),
-        next = json['next_url'];
+      :next = json['next_url'];
 }

@@ -68,7 +68,7 @@ class PhotoGridState extends State<PhotoGrid> {
               image: NetworkImage(photo.url),
               placeholder: AssetImage(
                 'assets/loading.gif',
-                package: 'flutter_facebook_image_picker',
+                package: 'flutter_instagram_image_picker'
               ),
               fit: BoxFit.cover,
             ),

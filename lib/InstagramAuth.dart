@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'screens.dart';
 
 class InstagramAuth with ChangeNotifier {
   Future<String> get accessToken async{
@@ -28,7 +27,6 @@ class InstagramAuth with ChangeNotifier {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("instagram_token", _accessToken);
 
-        print(accessToken);
         await flutterWebviewPlugin.cleanCookies();
         await flutterWebviewPlugin.close();
 

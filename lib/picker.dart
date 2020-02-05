@@ -24,6 +24,7 @@ class InstagramImagePicker extends StatefulWidget {
   final String cancelBtnText;
   final TextStyle cancelBtnTextStyle;
   final Function onCancel;
+  final bool showLogoutButton;
 
   InstagramImagePicker(
     this._accessToken, {
@@ -36,6 +37,7 @@ class InstagramImagePicker extends StatefulWidget {
     this.cancelBtnText = 'Cancel',
     this.cancelBtnTextStyle,
     @required this.onCancel,
+    this.showLogoutButton = false,
   }) : assert(_accessToken != null);
 
   @override
@@ -60,15 +62,15 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
     _client = GraphApi(widget._accessToken);
     _paginatePhotos();
 
-    _controller = new AnimationController(
+    _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 200),
     );
 
-    _imageListPosition = new Tween<Offset>(
+    _imageListPosition = Tween<Offset>(
       begin: Offset.zero,
       end: const Offset(-1.0, 0.0),
-    ).animate(new CurvedAnimation(
+    ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.fastOutSlowIn,
     ));
@@ -80,9 +82,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
     super.dispose();
   }
 
-  String get title {
-    return widget.appBarTitle;
-  }
+  String get title => widget.appBarTitle;
 
   Future<void> _paginatePhotos() async {
     if (!first && _photosNextLink == null) {
@@ -115,23 +115,25 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   }
 
   Widget _buildDoneButton() {
-    return GestureDetector(
-      onTap: _onLogout,
-      child: Center(
-        child: Padding(
-          padding: EdgeInsetsDirectional.only(end: 8),
-          child: Text(
-            'Logout',
-            textScaleFactor: 1.3,
-            style: widget.doneBtnTextStyle ??
-                TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.white,
+    return !widget.showLogoutButton
+        ? Container()
+        : GestureDetector(
+            onTap: _onLogout,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(end: 8),
+                child: Text(
+                  'Logout',
+                  textScaleFactor: 1.3,
+                  style: widget.doneBtnTextStyle ??
+                      TextStyle(
+                        fontSize: 12.0,
+                        color: Colors.white,
+                      ),
                 ),
-          ),
-        ),
-      ),
-    );
+              ),
+            ),
+          );
   }
 
   void _onCancel() {
@@ -163,15 +165,10 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
           title,
           style: widget.appBarTextStyle,
         ),
-        leading: //_selectedAlbum == null
-            //? _buildCancelButton()
-            /*:*/ IconButton(
+        leading: IconButton(
           tooltip: 'Back',
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            _onCancel();
-            //Navigator.pop(context);
-          },
+          onPressed: _onCancel,
         ),
         actions: <Widget>[
           _buildDoneButton(),

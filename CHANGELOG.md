@@ -1,3 +1,6 @@
+## [0.3.1]
+* added missing loading gif
+
 ## [0.3.0]
 
 * pagination works now good, load 20 more photos each paging
