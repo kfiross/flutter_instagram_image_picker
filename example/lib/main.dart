@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_instagram_image_picker/InstagramAuth.dart';
 import 'package:flutter_instagram_image_picker/flutter_instagram_image_picker.dart';
-import 'package:flutter_instagram_image_picker/screens.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -24,22 +22,15 @@ class LoginPage extends StatelessWidget {
             child: Text("Continue with instagram"),
             onPressed: () async {
 
-              Map loginMap;
               bool isLogged = await InstagramAuth().isLogged;
-              // check if user already logged in, if not log the user using the
-              // WebView interface
+              // check if user already logged in, if not log the user
               if (!isLogged) {
-                loginMap = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => InstagramLoginPage(),
-                    ));
+                bool loginStatus = await InstagramAuth().signUserIn(context);
 
+                print(loginStatus);
                 // if user canceled the operation
-                if (loginMap == null)
+                if (!loginStatus)
                   return;
-
-                await InstagramAuth().login(loginMap['username'], loginMap['password']);
               }
 
 

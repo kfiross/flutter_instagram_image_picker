@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_instagram_image_picker/graph_api.dart';
+import 'package:flutter_instagram_image_picker/instagram_api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'screens.dart';
 
 class InstagramAuth with ChangeNotifier {
   static final InstagramAuth _singleton = new InstagramAuth._();
@@ -52,5 +54,15 @@ class InstagramAuth with ChangeNotifier {
       sessionKey: accessMapResponse['sessionKey'],
       userId: "${accessMapResponse['userID']}",
     );
+  }
+
+  Future<bool> signUserIn(BuildContext context) async {
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => InstagramLoginPage(),
+      ),
+    );
+    return result ?? false;
   }
 }

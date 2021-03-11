@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'instagram_auth.dart';
+
 class InstagramLoginPage extends StatefulWidget {
   @override
   _InstagramLoginPageState createState() => _InstagramLoginPageState();
@@ -100,11 +102,12 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                                 fontWeight: FontWeight.bold, fontSize: 16)),
                         onPressed: !_isValid
                             ? null
-                            : () {
-                                Navigator.pop(context, {
-                                  'username': _username,
-                                  'password': _password
-                                });
+                            : () async {
+                                await InstagramAuth().login(
+                                  _username,
+                                  _password,
+                                );
+                                Navigator.pop(context, true);
                               }),
                   )
                 ],

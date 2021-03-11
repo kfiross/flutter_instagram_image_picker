@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import './InstagramAuth.dart';
+import 'instagram_auth.dart';
+import 'instagram_api_client.dart';
 
-import 'graph_api.dart';
+import 'instagram_api_client.dart';
 import 'model/photo.dart';
 import 'model/photo_paging.dart';
 import 'ui/photo_grid.dart';
 
 class InstagramImagePicker extends StatefulWidget {
-  // final String _accessToken;
   final Map<String, String> _accessMap;
 
   /// AppBar config
