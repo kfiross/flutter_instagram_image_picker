@@ -47,9 +47,9 @@ class InstagramImagePicker extends StatefulWidget {
 
 class _InstagramImagePickerState extends State<InstagramImagePicker>
     with TickerProviderStateMixin {
-  GraphApi _client;
+  InstagramApiClient _client;
   List<Photo> _photos = [];
-  String _photosNextLink;
+  // String _photosNextLink;
   List<Photo> _selectedPhotos;
   static bool first = true;
 
@@ -61,10 +61,8 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
     super.initState();
     _selectedPhotos = List<Photo>();
 
-    _client = GraphApi(
-      // userId: widget._accessMap['userId'],
-      // sessionKey: widget._accessMap['sessionKey'],
-    );
+    _client = InstagramApiClient();
+
     _paginatePhotos();
 
     _controller = AnimationController(
@@ -90,13 +88,15 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   String get title => widget.appBarTitle;
 
   Future<void> _paginatePhotos() async {
-    if (!first && _photosNextLink == null) {
+    if (!first ){//&& _photosNextLink == null) {
       return;
     }
+
     PhotoPaging photos = await _client.fetchPhotos(
       userId: widget._accessMap['userId'],
       sessionKey: widget._accessMap['sessionKey'],
     );//pagingUrl: _photo
+
     // sNextLink);
     setState(() {
       _photos.addAll(photos.data);
@@ -109,7 +109,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   void _reset() {
     setState(() {
       _selectedPhotos = [];
-      _photosNextLink = null;
+      // _photosNextLink = null;
     });
   }
 

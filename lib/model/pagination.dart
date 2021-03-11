@@ -6,6 +6,5 @@ class Pagination {
     this.next,
   );
 
-  Pagination.fromJson(Map json)
-      :next = json['next_url'];
+  Pagination.fromJson(Map json) : next = json['next_url'];
 }

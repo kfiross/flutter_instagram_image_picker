@@ -1,9 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-
-import 'InstagramAuth.dart';
-import 'InstagramAuth.dart';
 
 class InstagramLoginPage extends StatefulWidget {
   @override
@@ -11,8 +7,8 @@ class InstagramLoginPage extends StatefulWidget {
 }
 
 class _InstagramLoginPageState extends State<InstagramLoginPage> {
-  String _username;
-  String _password;
+  String _username = 'neta.nails.100';
+  String _password = 'netaben100';
   bool _isValid = false;
 
   @override
@@ -30,7 +26,9 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
             children: [
               Expanded(
                 flex: 2,
-                child: Image.asset('assets/ig_logo.png', package: 'flutter_instagram_image_picker'
+                child: Image.asset(
+                  'assets/ig_logo.png',
+                  package: 'flutter_instagram_image_picker',
                 ),
               ),
               // Expanded(child: Container(), flex: 1),
@@ -41,6 +39,7 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                     Container(
                       height: 48,
                       child: TextFormField(
+                        initialValue: _username ?? '',
                         onChanged: (val) {
                           _username = val;
                           _checkForm();
@@ -62,6 +61,7 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                     Container(
                       height: 48,
                       child: TextFormField(
+                        initialValue: _password ?? '',
                         onChanged: (val) {
                           _password = val;
                           _checkForm();
@@ -76,7 +76,6 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey, width: 0.6),
                           ),
-
                         ),
                         obscureText: true,
                       ),
@@ -86,10 +85,6 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                       width: double.infinity,
                       height: 40,
                       child: CupertinoButton.filled(
-                        // style: ButtonStyle(
-                        //   elevation: MaterialStateProperty.all(0),
-                        //
-                        // ),
                         disabledColor: Colors.blue[100],
                         padding: const EdgeInsets.all(2),
                         borderRadius: BorderRadius.circular(4),
@@ -108,29 +103,10 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                 ),
 
               ),
-
-
             ],
           ),
         ),
     );
-
-
-    // String url =
-    //     "https://instagram.com/oauth/authorize/?client_id=1677ed07ddd54db0a70f14f9b1435579&redirect_uri=http://instagram.pixelunion.net&response_type=token&hl=en";
-    //
-    // InstagramAuth().signInWithInstagram(context);
-    //
-    // return WebviewScaffold(
-    //   url: url,
-    //   appBar: AppBar(
-    //     backgroundColor: Colors.grey[800],
-    //     title: const Text('Login to Instagram', style: TextStyle(color: Colors.white),),
-    //   ),
-    //   withZoom: true,
-    //   withLocalStorage: true,
-    //   hidden: true,
-    // );
   }
 
   void _checkForm() {

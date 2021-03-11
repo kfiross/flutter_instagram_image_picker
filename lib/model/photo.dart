@@ -11,5 +11,5 @@ class Photo {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Photo && runtimeType == other.runtimeType && url == other.url;
+      other is Photo && runtimeType == other.runtimeType && url == other.url;
 }

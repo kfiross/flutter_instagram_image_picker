@@ -38,15 +38,17 @@ class LoginPage extends StatelessWidget {
                 // if user canceled the operation
                 if (loginMap == null)
                   return;
+
+                await InstagramAuth().login(loginMap['username'], loginMap['password']);
               }
 
-              await InstagramAuth().login(loginMap['username'], loginMap['password']);
 
               final accessMapData = await InstagramAuth().accessData;
               if(accessMapData == null){
                 return null;
               }
-              // after got access token, can go to picker screen
+
+              // After got the access data, can go to picker screen
               Navigator.push(
                 context,
                 MaterialPageRoute(
