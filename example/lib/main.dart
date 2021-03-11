@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
         title: Text('Instagram login demo'),
       ),
       body: Center(
-        child: RaisedButton(
+        child: ElevatedButton(
             child: Text("Continue with instagram"),
             onPressed: () async {
 

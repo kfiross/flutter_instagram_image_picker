@@ -1,5 +1,5 @@
-## [0.4.0]
-* Using new REST API solution to fetch the photos correctly
+## [1.0.0]
+* Using __new REST API solution__ to fetch the photos correctly
 
 ## [0.3.1]
 * added missing loading gif
@@ -11,7 +11,7 @@
 ## [0.2.0]
 
 * updated example because the package more flexible now
-* fixed bug of logging in every time, added wrap auth of Instagram 
+* Fixed a bug of logging in every time, added wrap auth of Instagram 
 to remember past login
 
 ## [0.1.0]

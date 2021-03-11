@@ -204,8 +204,11 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
         children: <Widget>[
           Container(
             width: 300,
-            child: RaisedButton(
-              color: Colors.indigo,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.indigo),
+              ),
+              //color: Colors.indigo,
               child: Text(
                 "${widget.doneBtnText} (${_selectedPhotos.length})",
                 style: TextStyle(color: Colors.white),
