@@ -59,10 +59,13 @@ Navigator.push(
 
 ## Screenshots
 * Login Page:
+
 ![](images/login_page.png)
 
 * Image Picker:
+
 ![](images/picker_page.png)
 
 * Image Picker (after selection):
+
 ![](images/picker_page_selected.png)
