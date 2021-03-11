@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'instagram_auth.dart';
 
+/// Screen mimicking the login process of an Instagram account
 class InstagramLoginPage extends StatefulWidget {
   @override
   _InstagramLoginPageState createState() => _InstagramLoginPageState();
@@ -119,6 +120,8 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
     );
   }
 
+  /// Checking if the form is valid, and enables/disables the login button
+  /// accordingly
   void _checkForm() {
     setState(() {
       _isValid = _password.isNotEmpty && _username.isNotEmpty;

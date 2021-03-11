@@ -16,7 +16,6 @@ bool isLogged = await InstagramAuth().isLogged;
 if (!isLogged) {
   bool loginStatus = await InstagramAuth().signUserIn(context);
 
-  print(loginStatus);
   // if user canceled the operation
   if (!loginStatus)
     return;

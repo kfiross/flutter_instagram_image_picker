@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'instagram_auth.dart';
 import 'instagram_api_client.dart';
-
-import 'instagram_api_client.dart';
 import 'model/photo.dart';
 import 'model/photo_paging.dart';
 import 'ui/photo_grid.dart';
 
+/// Widget that presents the Image picker of photos of an Instagram account
 class InstagramImagePicker extends StatefulWidget {
   final Map<String, String> _accessMap;
 
@@ -55,7 +54,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   static bool first = true;
 
   AnimationController _controller;
-  Animation<Offset> _imageListPosition;
+  // Animation<Offset> _imageListPosition;
 
   @override
   void initState() {
@@ -71,13 +70,13 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
       duration: const Duration(milliseconds: 200),
     );
 
-    _imageListPosition = Tween<Offset>(
-      begin: Offset.zero,
-      end: const Offset(-1.0, 0.0),
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.fastOutSlowIn,
-    ));
+    // _imageListPosition = Tween<Offset>(
+    //   begin: Offset.zero,
+    //   end: const Offset(-1.0, 0.0),
+    // ).animate(CurvedAnimation(
+    //   parent: _controller,
+    //   curve: Curves.fastOutSlowIn,
+    // ));
   }
 
   @override

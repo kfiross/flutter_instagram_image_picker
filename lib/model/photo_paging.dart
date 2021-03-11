@@ -1,4 +1,3 @@
-import 'pagination.dart';
 import 'photo.dart';
 
 class PhotoPaging {
