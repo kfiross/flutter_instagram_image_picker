@@ -10,7 +10,8 @@ import 'model/photo_paging.dart';
 import 'ui/photo_grid.dart';
 
 class InstagramImagePicker extends StatefulWidget {
-  final String _accessToken;
+  // final String _accessToken;
+  final Map<String, String> _accessMap;
 
   /// AppBar config
   final String appBarTitle;
@@ -27,7 +28,7 @@ class InstagramImagePicker extends StatefulWidget {
   final bool showLogoutButton;
 
   InstagramImagePicker(
-    this._accessToken, {
+    this._accessMap, {
     this.appBarTitle = 'Pick Instagram Image',
     this.appBarTextStyle,
     this.appBarColor,
@@ -38,7 +39,7 @@ class InstagramImagePicker extends StatefulWidget {
     this.cancelBtnTextStyle,
     @required this.onCancel,
     this.showLogoutButton = false,
-  }) : assert(_accessToken != null);
+  }); //: assert(_accessToken != null);
 
   @override
   _InstagramImagePickerState createState() => _InstagramImagePickerState();
@@ -59,7 +60,11 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   void initState() {
     super.initState();
     _selectedPhotos = List<Photo>();
-    _client = GraphApi(widget._accessToken);
+
+    _client = GraphApi(
+      // userId: widget._accessMap['userId'],
+      // sessionKey: widget._accessMap['sessionKey'],
+    );
     _paginatePhotos();
 
     _controller = AnimationController(
@@ -88,12 +93,16 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
     if (!first && _photosNextLink == null) {
       return;
     }
-    PhotoPaging photos = await _client.fetchPhotos(pagingUrl: _photosNextLink);
+    PhotoPaging photos = await _client.fetchPhotos(
+      userId: widget._accessMap['userId'],
+      sessionKey: widget._accessMap['sessionKey'],
+    );//pagingUrl: _photo
+    // sNextLink);
     setState(() {
       _photos.addAll(photos.data);
-      if (photos.pagination != null) {
-        _photosNextLink = photos.pagination.next;
-      }
+      // if (photos.pagination != null) {
+      //   _photosNextLink = photos.pagination.next;
+      // }
     });
   }
 

@@ -1,3 +1,6 @@
+## [0.4.0]
+* Using new REST API solution to fetch the photos correctly
+
 ## [0.3.1]
 * added missing loading gif
 

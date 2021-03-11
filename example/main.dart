@@ -23,28 +23,35 @@ class LoginPage extends StatelessWidget {
         child: RaisedButton(
             child: Text("Continue with instagram"),
             onPressed: () async {
-              var accessToken;
 
-              accessToken = await InstagramAuth().accessToken;
+              Map loginMap;
+              bool isLogged = await InstagramAuth().isLogged;
               // check if user already logged in, if not log the user using the
               // WebView interface
-              if (accessToken == null) {
-                accessToken = await Navigator.push(
+              if (!isLogged) {
+                loginMap = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => InstagramWebViewLoginPage(),
+                      builder: (_) => InstagramLoginPage(),
                     ));
 
                 // if user canceled the operation
-                if (accessToken == null) return;
+                if (loginMap == null)
+                  return;
               }
 
+              await InstagramAuth().login(loginMap['username'], loginMap['password']);
+
+              final accessMapData = await InstagramAuth().accessData;
+              if(accessMapData == null){
+                return null;
+              }
               // after got access token, can go to picker screen
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => InstagramImagePicker(
-                    accessToken,
+                    accessMapData,
                     showLogoutButton: true,
                     onDone: (items) {
                       Navigator.pop(context);
