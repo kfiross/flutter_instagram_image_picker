@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../debounce.dart';
 import '../flutter_instagram_image_picker.dart';
 
-
 class PhotoGrid extends StatefulWidget {
   final List<Photo> _photos;
   final List<Photo> _selectedPhotos;
@@ -11,11 +10,11 @@ class PhotoGrid extends StatefulWidget {
   final Function onLoadMore;
 
   PhotoGrid(
-      this._photos,
-      this._selectedPhotos, {
-        @required this.onPhotoTap,
-        @required this.onLoadMore,
-      });
+    this._photos,
+    this._selectedPhotos, {
+    @required this.onPhotoTap,
+    @required this.onLoadMore,
+  });
 
   @override
   PhotoGridState createState() {
@@ -32,7 +31,7 @@ class PhotoGridState extends State<PhotoGrid> {
     super.initState();
     _debouncer = Debouncer(
       Duration(seconds: 1),
-          (arg) => widget.onLoadMore(),
+      (arg) => widget.onLoadMore(),
       null,
       true,
     );
@@ -66,23 +65,13 @@ class PhotoGridState extends State<PhotoGrid> {
           Positioned.fill(
             child: FadeInImage(
               image: NetworkImage(photo.url),
-              placeholder: AssetImage(
-                'assets/loading.gif',
-                package: 'flutter_instagram_image_picker'
-              ),
+              placeholder: AssetImage('assets/loading.gif',
+                  package: 'flutter_instagram_image_picker'),
               fit: BoxFit.cover,
             ),
           ),
-          _isSelected(photo)
-              ? Positioned(
-            bottom: 5.00,
-            right: 5.00,
-            child: Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ),
-          )
-              : null,
+          if (_isSelected(photo))
+            Opacity(opacity: 0.5, child: Container(color: Colors.blue))
         ].where((o) => o != null).toList(),
       ),
     );

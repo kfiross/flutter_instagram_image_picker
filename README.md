@@ -38,7 +38,9 @@ Navigator.push(
     builder: (context) => InstagramImagePicker(
       accessMapData,
       showLogoutButton: true,
-      onDone: (items) {
+      onDone: (photos) {
+        // photos are the photos you selected in the picker
+        // each one has the url
         Navigator.pop(context);
       },
       onCancel: () => Navigator.pop(context),
@@ -51,7 +53,9 @@ Navigator.push(
 ## Screenshots
 * Login Page:
 
-![](images/login_page.png)
+![](images/login_empty.png) 
+![](images/login_filled.png)
+
 
 * Image Picker:
 

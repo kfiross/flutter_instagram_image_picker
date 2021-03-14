@@ -46,6 +46,9 @@ class LoginPage extends StatelessWidget {
                     accessMapData,
                     showLogoutButton: true,
                     onDone: (items) {
+                      items.forEach((element) {
+                        print('selected: ${element.url}');
+                      });
                       Navigator.pop(context);
                     },
                     onCancel: () => Navigator.pop(context),

@@ -13,11 +13,13 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
   String _username;
   String _password;
   bool _isValid = false;
+  bool _isPasswordVisible = false;
+  bool _selectedPasswordField = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
         title: const Text(
@@ -45,6 +47,11 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                   Container(
                     height: 48,
                     child: TextFormField(
+                      onTap: () {
+                        setState(() {
+                          _selectedPasswordField = false;
+                        });
+                      },
                       initialValue: _username ?? '',
                       onChanged: (val) {
                         _username = val;
@@ -56,11 +63,11 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                         hintStyle: TextStyle(color: Colors.grey[600]),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.grey, width: 0.9),
+                              BorderSide(color: Colors.grey[700], width: 0.9),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.grey, width: 0.6),
+                              BorderSide(color: Colors.grey, width: 0.9),
                         ),
                       ),
                     ),
@@ -68,26 +75,58 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                   const SizedBox(height: 8),
                   Container(
                     height: 48,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(
+                          color: _selectedPasswordField
+                              ? Colors.grey[700]
+                              : Colors.grey,
+                          width: 1.1,
+                        )),
                     child: TextFormField(
+                      onTap: () {
+                        setState(() {
+                          _selectedPasswordField = true;
+                        });
+                      },
                       initialValue: _password ?? '',
                       onChanged: (val) {
                         _password = val;
                         _checkForm();
                       },
                       decoration: InputDecoration(
+                        suffixIcon: Container(
+                          width: 76,
+                          height: 40,
+                          color: Colors.grey[100],
+                          child: CupertinoButton(
+                            padding: const EdgeInsets.all(2),
+                            child: Text(
+                              _isPasswordVisible ? "Hide" : "Show",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
+                          ),
+                        ),
                         isDense: true,
                         hintText: 'Password',
                         hintStyle: TextStyle(color: Colors.grey[600]),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.grey, width: 0.9),
+                              BorderSide(color: Colors.grey[600], width: 0),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.6),
+                          borderSide: BorderSide(color: Colors.grey, width: 0),
                         ),
                       ),
-                      obscureText: true,
+                      obscureText: !_isPasswordVisible,
                     ),
                   ),
                   const SizedBox(height: 24),

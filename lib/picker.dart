@@ -49,7 +49,6 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   InstagramApiClient _client;
   List<Photo> _photos = [];
 
-  // String _photosNextLink;
   int _page;
   bool _hasNext = true;
 
@@ -57,6 +56,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   static bool first = true;
 
   AnimationController _controller;
+
   // Animation<Offset> _imageListPosition;
 
   @override
@@ -90,6 +90,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
 
   String get title => widget.appBarTitle;
 
+  /// Handles pagination and loading more photos if left
   Future<void> _paginatePhotos() async {
     if (!first && !_hasNext) {
       return;
@@ -97,39 +98,34 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
 
     PhotoPaging photoPaging;
 
-    if(_page == null) {
+    if (_page == null) {
       photoPaging = await _client.fetchPhotos(
         userId: widget._accessMap['userId'],
         sessionKey: widget._accessMap['sessionKey'],
       );
       _page = 0;
-    }
-    else {
+    } else {
       photoPaging = await _client.fetchPhotos(
         userId: widget._accessMap['userId'],
         sessionKey: widget._accessMap['sessionKey'],
-        page: _page+1,
+        page: _page + 1,
       );
       _page++;
     }
 
-    if(!photoPaging.hasNext){
+    if (!photoPaging.hasNext) {
       _hasNext = false;
     }
 
-
     setState(() {
       _photos.addAll(photoPaging.data);
-      // if (photos.pagination != null) {
-      //   _photosNextLink = photos.pagination.next;
-      // }
     });
   }
 
   void _reset() {
     setState(() {
       _selectedPhotos = [];
-      // _photosNextLink = null;
+      _hasNext = true;
     });
   }
 
@@ -218,24 +214,29 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
           ],
         ),
       ),
-      bottomSheet: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: 300,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.indigo),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 300,
+              height: 40,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                  backgroundColor: MaterialStateProperty.all(Colors.indigo),
+                ),
+                //color: Colors.indigo,
+                child: Text(
+                  "${widget.doneBtnText} (${_selectedPhotos.length})",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: _onDone,
               ),
-              //color: Colors.indigo,
-              child: Text(
-                "${widget.doneBtnText} (${_selectedPhotos.length})",
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: _onDone,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
