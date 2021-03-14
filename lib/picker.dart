@@ -50,6 +50,9 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   List<Photo> _photos = [];
 
   // String _photosNextLink;
+  int _page;
+  bool _hasNext = true;
+
   List<Photo> _selectedPhotos;
   static bool first = true;
 
@@ -88,19 +91,35 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
   String get title => widget.appBarTitle;
 
   Future<void> _paginatePhotos() async {
-    if (!first) {
-      //&& _photosNextLink == null) {
+    if (!first && !_hasNext) {
       return;
     }
 
-    PhotoPaging photos = await _client.fetchPhotos(
-      userId: widget._accessMap['userId'],
-      sessionKey: widget._accessMap['sessionKey'],
-    ); //pagingUrl: _photo
+    PhotoPaging photoPaging;
 
-    // sNextLink);
+    if(_page == null) {
+      photoPaging = await _client.fetchPhotos(
+        userId: widget._accessMap['userId'],
+        sessionKey: widget._accessMap['sessionKey'],
+      );
+      _page = 0;
+    }
+    else {
+      photoPaging = await _client.fetchPhotos(
+        userId: widget._accessMap['userId'],
+        sessionKey: widget._accessMap['sessionKey'],
+        page: _page+1,
+      );
+      _page++;
+    }
+
+    if(!photoPaging.hasNext){
+      _hasNext = false;
+    }
+
+
     setState(() {
-      _photos.addAll(photos.data);
+      _photos.addAll(photoPaging.data);
       // if (photos.pagination != null) {
       //   _photosNextLink = photos.pagination.next;
       // }

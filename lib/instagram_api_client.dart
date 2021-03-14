@@ -13,13 +13,16 @@ class InstagramApiClient {
 
   InstagramApiClient();
 
-  /// Signing in the user with the given username and password
+  /// Signing in a user with the given username and password
   Future<Map> signInUser(String username, String password) async {
     String url = "$_endpoint/login?username=$username&password=$password";
     var response = await http.get(Uri.parse(url));
+
     if (response.statusCode != 200) {
+      print(response.statusCode);
       return {};
     }
+
     return json.decode(response.body);
   }
 
@@ -28,10 +31,14 @@ class InstagramApiClient {
   Future<PhotoPaging> fetchPhotos({
     @required String sessionKey,
     @required String userId,
+    int page,
   }) async {
     //String url = pagingUrl ?? '$_graphApiEndpoint/?access_token=$_accessToken';
 
     String url = "$_endpoint/media?sessionKey=$sessionKey&user_id=$userId";
+    if(page != null){
+      url += "&page=$page";
+    }
 
     var response = await http.get(Uri.parse(url));
 

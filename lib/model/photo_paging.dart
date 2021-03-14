@@ -2,12 +2,14 @@ import 'photo.dart';
 
 class PhotoPaging {
   List<Photo> data;
+  bool hasNext;
 
   //Pagination pagination;
 
   PhotoPaging.fromJson(Map json) {
     data = <Photo>[];
     var photosUrls = json['data'] as List;
+    hasNext = json['hasNext'] as bool;
 
     photosUrls?.forEach((url) {
       data.add(Photo(url));
