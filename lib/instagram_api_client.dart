@@ -36,7 +36,7 @@ class InstagramApiClient {
     //String url = pagingUrl ?? '$_graphApiEndpoint/?access_token=$_accessToken';
 
     String url = "$_endpoint/media?sessionKey=$sessionKey&user_id=$userId";
-    if(page != null){
+    if (page != null) {
       url += "&page=$page";
     }
 

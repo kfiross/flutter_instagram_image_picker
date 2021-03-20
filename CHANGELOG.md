@@ -1,6 +1,5 @@
 ## [1.1.0]
 * Updated `Sign in with Instagram` screen
-* Added pagination support (up to 20 more photos each load)
 * Updated selection UI  
 
 ## [1.0.0]

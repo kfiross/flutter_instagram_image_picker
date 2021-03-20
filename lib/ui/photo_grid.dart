@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../debounce.dart';
 import '../flutter_instagram_image_picker.dart';
 
+/// Widget that shows list of photos in a grid
 class PhotoGrid extends StatefulWidget {
   final List<Photo> _photos;
   final List<Photo> _selectedPhotos;

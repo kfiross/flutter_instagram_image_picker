@@ -46,6 +46,15 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                 children: [
                   Container(
                     height: 48,
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(
+                          color: !_selectedPasswordField
+                              ? Colors.grey[700]
+                              : Colors.grey,
+                          width: 1.1,
+                        )),
                     child: TextFormField(
                       onTap: () {
                         setState(() {
@@ -58,23 +67,26 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                         _checkForm();
                       },
                       decoration: InputDecoration(
+                        labelText: 'Username',
+                        labelStyle: TextStyle(color: Colors.grey[600]),
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
                         isDense: true,
-                        hintText: 'Username',
                         hintStyle: TextStyle(color: Colors.grey[600]),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.grey[700], width: 0.9),
+                              BorderSide(color: Colors.grey[600], width: 0),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.9),
+                          borderSide: BorderSide(color: Colors.grey, width: 0),
                         ),
                       ),
+                      obscureText: !_isPasswordVisible,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Container(
                     height: 48,
+                    padding: const EdgeInsets.symmetric(vertical: 2),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
                         border: Border.all(
@@ -95,6 +107,10 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                         _checkForm();
                       },
                       decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(color: Colors.grey[600]),
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        isDense: true,
                         suffixIcon: Container(
                           width: 76,
                           height: 40,
@@ -115,8 +131,7 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
                             },
                           ),
                         ),
-                        isDense: true,
-                        hintText: 'Password',
+                        // hintText: 'Password',
                         hintStyle: TextStyle(color: Colors.grey[600]),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
