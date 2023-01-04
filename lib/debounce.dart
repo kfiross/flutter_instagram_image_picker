@@ -3,8 +3,8 @@ import 'dart:async';
 class Debouncer {
   Duration delay;
   var callback;
-  List args;
-  bool atBegin;
+  List? args;
+  bool? atBegin;
 
   Debouncer(this.delay, this.callback, this.args, [this.atBegin = false]);
 
@@ -24,10 +24,10 @@ class Debouncer {
       timeoutId.cancel();
     }
     //if atBegin is true, 'exec' has to executed the first time debounce gets called
-    if (atBegin && timeoutId == null) {
+    if (atBegin == true && timeoutId == null) {
       exec();
     }
     //schedule a new call after delay time
-    timeoutId = new Timer(delay, atBegin ? clear : exec);
+    timeoutId = Timer(delay, atBegin == true ? clear : exec);
   }
 }
