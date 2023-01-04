@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'instagram_auth.dart';
 import 'instagram_api_client.dart';
 import 'model/photo.dart';
@@ -14,29 +13,29 @@ class InstagramImagePicker extends StatefulWidget {
 
   /// AppBar config
   final String appBarTitle;
-  final TextStyle appBarTextStyle;
-  final Color appBarColor;
+  final TextStyle? appBarTextStyle;
+  final Color? appBarColor;
 
   /// AppBar actions
   final String doneBtnText;
-  final TextStyle doneBtnTextStyle;
+  final TextStyle? doneBtnTextStyle;
   final Function(List<Photo>) onDone;
   final String cancelBtnText;
-  final TextStyle cancelBtnTextStyle;
+  final TextStyle? cancelBtnTextStyle;
   final Function onCancel;
   final bool showLogoutButton;
 
-  InstagramImagePicker(
-    this._accessMap, {
+  const InstagramImagePicker(
+    this._accessMap, {super.key,
     this.appBarTitle = 'Pick Instagram Image',
     this.appBarTextStyle,
     this.appBarColor,
     this.doneBtnText = 'Done',
     this.doneBtnTextStyle,
-    @required this.onDone,
+    required this.onDone,
     this.cancelBtnText = 'Cancel',
     this.cancelBtnTextStyle,
-    @required this.onCancel,
+    required this.onCancel,
     this.showLogoutButton = false,
   }); //: assert(_accessToken != null);
 
@@ -46,23 +45,23 @@ class InstagramImagePicker extends StatefulWidget {
 
 class _InstagramImagePickerState extends State<InstagramImagePicker>
     with TickerProviderStateMixin {
-  InstagramApiClient _client;
-  List<Photo> _photos = [];
+  InstagramApiClient? _client;
+  final List<Photo> _photos = [];
 
-  int _page;
+  int _page = 0;
   bool _hasNext = true;
 
-  List<Photo> _selectedPhotos;
+  List<Photo> _selectedPhotos = [];
   static bool first = true;
 
-  AnimationController _controller;
+  AnimationController? _controller;
 
   // Animation<Offset> _imageListPosition;
 
   @override
   void initState() {
     super.initState();
-    _selectedPhotos = List<Photo>();
+    _selectedPhotos = <Photo>[];
 
     _client = InstagramApiClient();
 
@@ -84,7 +83,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -95,30 +94,30 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
     if (!first && !_hasNext) {
       return;
     }
+    _hasNext = false;
 
     PhotoPaging photoPaging;
 
-    if (_page == null) {
-      photoPaging = await _client.fetchPhotos(
-        userId: widget._accessMap['userId'],
-        sessionKey: widget._accessMap['sessionKey'],
+    if (_page == 0) {
+      photoPaging = await _client!.fetchPhotos(
+        userId: widget._accessMap['userId'] ?? "",
+        //sessionKey: widget._accessMap['sessionKey'] ?? "",
       );
-      _page = 0;
     } else {
-      photoPaging = await _client.fetchPhotos(
-        userId: widget._accessMap['userId'],
-        sessionKey: widget._accessMap['sessionKey'],
-        page: _page + 1,
+      photoPaging = await _client!.fetchPhotos(
+        userId: widget._accessMap['userId'] ?? "",
+        // sessionKey: widget._accessMap['sessionKey'] ?? "",
+        // page: _page + 1,
       );
       _page++;
     }
 
-    if (!photoPaging.hasNext) {
+    if (photoPaging.hasNext == false) {
       _hasNext = false;
     }
 
     setState(() {
-      _photos.addAll(photoPaging.data);
+      _photos.addAll(photoPaging.data ?? []);
     });
   }
 
@@ -146,12 +145,12 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
             onTap: _onLogout,
             child: Center(
               child: Padding(
-                padding: EdgeInsetsDirectional.only(end: 8),
+                padding: const EdgeInsetsDirectional.only(end: 8),
                 child: Text(
                   'Logout',
                   textScaleFactor: 1.3,
                   style: widget.doneBtnTextStyle ??
-                      TextStyle(
+                      const TextStyle(
                         fontSize: 12.0,
                         color: Colors.white,
                       ),
@@ -208,7 +207,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
                 _photos,
                 _selectedPhotos,
                 onPhotoTap: _onPhotoTap,
-                onLoadMore: _paginatePhotos,
+                onLoadMore: (){},//_paginatePhotos,
               ),
             ),
           ],
@@ -219,7 +218,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
+            SizedBox(
               width: 300,
               height: 40,
               child: ElevatedButton(
@@ -230,7 +229,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
                 //color: Colors.indigo,
                 child: Text(
                   "${widget.doneBtnText} (${_selectedPhotos.length})",
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
                 onPressed: _onDone,
               ),

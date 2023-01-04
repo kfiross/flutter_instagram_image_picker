@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram_image_picker/instagram_api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +23,7 @@ class InstagramAuth with ChangeNotifier {
 
   /// Saving access data on cache for later usage
   Future<void> _setData(
-      {@required String sessionKey, @required String userId}) async {
+      {required String sessionKey, required String userId}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool("instagram_auth.logged", true);
     await prefs.setString("instagram_auth.sessionKey", sessionKey);
@@ -39,27 +38,27 @@ class InstagramAuth with ChangeNotifier {
 
   /// Return the unique access data (userID & sessionKey) generated when
   /// he logged in
-  Future<Map<String, String>> get accessData async {
+  Future<Map<String, String>?> get accessData async {
     if (!await isLogged) {
       return null;
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String sessionKey = prefs.getString("instagram_auth.sessionKey");
-    String userId = prefs.getString("instagram_auth.userId");
+    String? sessionKey = prefs.getString("instagram_auth.sessionKey");
+    String? userId = prefs.getString("instagram_auth.userId");
 
     return {
-      'sessionKey': sessionKey,
-      'userId': userId,
+      'sessionKey': sessionKey ?? "",
+      'userId': userId ?? "",
     };
   }
 
   /// Tries to login a user (by his username)
   /// If successful, keep the access data on cache
-  Future<void> login(String username, String password) async {
+  Future<void> login(String username) async {
     Map accessMapResponse =
-        await InstagramApiClient().signInUser(username, password);
+        await InstagramApiClient().attachUser(username);
     await _setData(
-      sessionKey: accessMapResponse['sessionKey'],
+      sessionKey: "",//accessMapResponse['sessionKey'],
       userId: "${accessMapResponse['userID']}",
     );
   }
@@ -71,7 +70,7 @@ class InstagramAuth with ChangeNotifier {
     var result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => InstagramLoginPage(),
+        builder: (_) => const InstagramLoginPage(),
       ),
     );
     return result ?? false;

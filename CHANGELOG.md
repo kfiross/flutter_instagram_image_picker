@@ -1,3 +1,6 @@
+## [2.0.0]
+* **Breaking change**: API now show only **public** images
+
 ## [1.1.0]
 * Updated `Sign in with Instagram` screen
 * Updated selection UI  
