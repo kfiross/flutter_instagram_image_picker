@@ -24,7 +24,6 @@ class LoginPage extends StatelessWidget {
         child: ElevatedButton(
             child: const Text("Continue with instagram"),
             onPressed: () async {
-
               bool isLogged = await InstagramAuth().isLogged;
               // check if user already logged in, if not log the user
               if (!isLogged) {
@@ -37,7 +36,7 @@ class LoginPage extends StatelessWidget {
               }
 
               final accessMapData = await InstagramAuth().accessData;
-              if(accessMapData == null){
+              if (accessMapData == null) {
                 return;
               }
 

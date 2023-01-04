@@ -177,7 +177,8 @@ class _InstagramLoginPageState extends State<InstagramLoginPage> {
   /// accordingly
   void _checkForm() {
     setState(() {
-      _isValid = (_username?.isNotEmpty ?? false);// && (_username?.isNotEmpty ?? false);
+      _isValid = (_username?.isNotEmpty ??
+          false); // && (_username?.isNotEmpty ?? false);
     });
   }
 }

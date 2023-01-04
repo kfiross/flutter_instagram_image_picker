@@ -61,7 +61,8 @@ class InstagramApiClient {
     //int? page,
   }) async {
     const limit = 16;
-    String url = '$_igScrapperEndpoint/userpost/$userId/$limit/%7Bend_cursor%7D';
+    String url =
+        '$_igScrapperEndpoint/userpost/$userId/$limit/%7Bend_cursor%7D';
 
     var response = await http.get(Uri.parse(url), headers: {
       'X-RapidAPI-Key': Env.apiKey,

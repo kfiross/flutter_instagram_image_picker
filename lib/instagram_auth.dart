@@ -55,10 +55,9 @@ class InstagramAuth with ChangeNotifier {
   /// Tries to login a user (by his username)
   /// If successful, keep the access data on cache
   Future<void> login(String username) async {
-    Map accessMapResponse =
-        await InstagramApiClient().attachUser(username);
+    Map accessMapResponse = await InstagramApiClient().attachUser(username);
     await _setData(
-      sessionKey: "",//accessMapResponse['sessionKey'],
+      sessionKey: "", //accessMapResponse['sessionKey'],
       userId: "${accessMapResponse['userID']}",
     );
   }

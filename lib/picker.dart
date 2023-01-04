@@ -26,7 +26,8 @@ class InstagramImagePicker extends StatefulWidget {
   final bool showLogoutButton;
 
   const InstagramImagePicker(
-    this._accessMap, {super.key,
+    this._accessMap, {
+    super.key,
     this.appBarTitle = 'Pick Instagram Image',
     this.appBarTextStyle,
     this.appBarColor,
@@ -207,7 +208,7 @@ class _InstagramImagePickerState extends State<InstagramImagePicker>
                 _photos,
                 _selectedPhotos,
                 onPhotoTap: _onPhotoTap,
-                onLoadMore: (){},//_paginatePhotos,
+                onLoadMore: () {}, //_paginatePhotos,
               ),
             ),
           ],
